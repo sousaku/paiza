@@ -1,27 +1,37 @@
 <?php
+function exploads($var) {
+    $var = str_replace(array("\r\n","\r","\n"), '', $var);
+    $var = explode(" ", $var);
+    return $var;
+}
 
-$abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
-$p = trim(fgets(STDIN));
-$p = str_replace(array("\r\n","\r","\n"), '', $p);
-$p = explode(" ", $p);
-$angou = str_split($p[1]);
-
-$S = trim(fgets(STDIN));
-$kai = str_split($S);
-
-for ($i = 0; $i < $p[0]; $i++) {
-
-    for ($j = 0; $j < 26; $j++) {
-        for ($k = 0; $k < 26; $k++) {
-            $kai[$j] = str_replace($angou[$k], $abc[$k], $kai[$j]);
-            if ($kai[$j] == $abc[$j]) {
+function kaidoku($angou1, $abc1, $moji1) {
+    $a = null;
+    for ($i = 0; $i < count($angou1); $i++) {
+        for ($j = 0; $j < count($abc1); $j++) {
+            $a[$i] = str_replace($angou1[$j], $abc1[$j], $moji1[$i]);
+            if (isset($a[$i])) {
                 break;
             }
         }
     }
+    return $a;
+}
+
+$abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+$n = exploads(trim(fgets(STDIN)));
+$angou = str_split($n[1]);
+
+$S = trim(fgets(STDIN));
+$moji = str_split($S);
+
+for ($i = 0; $i < $n[0]; $i++) {
+    $kai = kaidoku($angou, $abc, $moji);
+    $angou = null;
     $angou = $kai;
 }
-echo $kai . count($abc);
-
+for ($i = 0; $i < 26; $i++) {
+    echo $kai[$i];
+}
  ?>

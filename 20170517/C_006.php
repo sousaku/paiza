@@ -1,32 +1,24 @@
 <?php
+function exploads($var) {
+    $var = str_replace(array("\r\n","\r","\n"), '', $var);
+    $var = explode(" ", $var);
+    return $var;
+}
 
-$test = 0;
-$tortal;
-$str = trim(fgets(STDIN));
-$str = str_replace(array("\r\n","\r","\n"), '', $str);
-$str = explode(' ', $str);
+$p = exploads(trim(fgets(STDIN)));
+$s = exploads(trim(fgets(STDIN)));
 
-$p = trim(fgets(STDIN));
-$p = str_replace(array("\r\n","\r","\n"), '', $p);
-$p = explode(' ', $p);
-for ($i = 0; $i < $str; $i++) {
-    $S = trim(fgets(STDIN));
-    $S = str_replace(array("\r\n","\r","\n"), '', $S);
-    $Score[$i] = explode(' ', $S);
-}
-for ($i = 0; $i < $str; $i++) {
-    for ($j = 0; $j < $str; $j++) {
-        $test[$i] += $str[$i] * $Score[$i][$j];
+for ($i = 0; $i < $p[1]; $i++) {
+    $m[$i] = exploads(trim(fgets(STDIN)));
+    $sum = 0;
+    for ($j = 0; $j < $p[0]; $j++) {
+        $sum += $s[$j] * $m[$i][$j];
     }
+    $SUM[$i] = round($sum, 0);
 }
-for ($i = 0; $i < $str-1; $i++) {
-    if (round($test[$i+1]) <= round($test[$i])) {
-        $tortal = round($test[$i]);
-        $test[$i] = $test[$i+1];
-        $test[$i+1] = $tortal;
-    }
-}
-for ($i = 0; $i < $str-1; $i++) {
-    echo $test[$str[2] - $i] . "\n";
+sort($SUM, SORT_NATURAL | SORT_FLAG_CASE);
+
+for ($i = 1; $i <= $p[2]; $i++) {
+    echo $SUM[count($SUM) - $i] . "\n";
 }
  ?>
